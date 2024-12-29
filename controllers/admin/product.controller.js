@@ -46,7 +46,7 @@ module.exports.index = async(req, res) => {
     }); 
 }
 
-//[PATCH] /admin/change-status/:status/:id
+//[PATCH] /admin/products/change-status/:status/:id
 module.exports.changeStatus = async(req, res) => {
     const status = req.params.status;
     const id = req.params.id;
@@ -56,7 +56,7 @@ module.exports.changeStatus = async(req, res) => {
     res.redirect("back");
 }
 
-//[DELETE] /admin/delete/:id
+//[DELETE] /admin/products/delete/:id
 module.exports.deleteItem = async(req, res) => {
     const id = req.params.id;
 
@@ -69,7 +69,7 @@ module.exports.deleteItem = async(req, res) => {
     res.redirect("back");
 }
 
-//[PATCH] /admin/change-multi
+//[PATCH] /admin/products/change-multi
 module.exports.changeMulti = async(req, res) => {
     const type = req.body.type;
     const ids = req.body.ids.split(", ");
