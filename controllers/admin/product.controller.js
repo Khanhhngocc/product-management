@@ -71,6 +71,8 @@ module.exports.deleteItem = async(req, res) => {
         deleteAt: new Date()
     });
 
+    req.flash("success", "Delete product successfully!");
+
     res.redirect("back");
 }
 
@@ -98,6 +100,7 @@ module.exports.changeMulti = async(req, res) => {
                     deletedAt: new Date
                 }
             );
+            req.flash("success", `Delete ${ids.length} products successfully!`);
             break;
 
         case "change-position":
@@ -108,6 +111,8 @@ module.exports.changeMulti = async(req, res) => {
                 await Product.updateOne({_id: id}, {
                     position: position
                 });
+
+                req.flash("success", `Change position of ${ids.length} products successfully!`);
             }
             break;
     
