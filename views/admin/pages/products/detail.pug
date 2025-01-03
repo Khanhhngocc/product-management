@@ -8,10 +8,10 @@ block main
         div(class="mb-4") Giá: <b>#{product.price}</b>
 
     if(product.discountPercentage)
-        div(class="mb-4") Giảm giá: <b>#{product.price}</b>
+        div(class="mb-4") Giảm giá: <b>#{product.discountPercentage}</b>
 
     if(product.stock)
-        div(class="mb-4") Còn lại: <b>#{product.price}</b>
+        div(class="mb-4") Còn lại: <b>#{product.stock}</b>
 
     if(product.thumbnail)
         div(class="mb-4")
