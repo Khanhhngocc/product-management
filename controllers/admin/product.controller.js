@@ -90,10 +90,16 @@ module.exports.deleteItem = async(req, res) => {
     const id = req.params.id;
 
     // await Product.deleteOne({_id:id});
-    await Product.updateOne({_id: id}, {
-        deleted: true,
-        deleteAt: new Date()
-    });
+    await Product.updateOne(
+        {_id: id}, 
+        {
+            deleted: true,
+            deletedBy: {
+                account_id: res.locals.user.id,
+                deletedAt: new Date(),
+            }
+        }
+    );
 
     req.flash("success", "Delete product successfully!");
 
@@ -118,10 +124,13 @@ module.exports.changeMulti = async(req, res) => {
 
         case "delete-all":
             await Product.updateMany(
-                {   _id: { $in: ids}}, 
+                {   _id: { $in: ids}    }, 
                 {
                     deleted: true,
-                    deletedAt: new Date
+                    deletedBy: {
+                        account_id: res.locals.user.id,
+                        deletedAt: new Date(),
+                    }
                 }
             );
             req.flash("success", `Delete ${ids.length} products successfully!`);
