@@ -4,6 +4,7 @@ include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/form-change-multi.pug
 include ../../mixins/alert.pug
+include ../../mixins/moment.pug
 
 
 
@@ -71,6 +72,7 @@ block main
                             th Giá
                             th Vị trí
                             th Trạng thái 
+                            th Người tạo
                             th Hành động
 
 
@@ -128,6 +130,10 @@ block main
                                             span(
                                                 class="badge badge-danger"
                                             ) inactive
+                                td 
+                                    p #{item.accountFullname}
+                                    p 
+                                        +formatDateTime(item.createdBy.createdAt)
                                 td 
                                     a(
                                         href=`${prefixAdmin}/products/detail/${item.id}`
