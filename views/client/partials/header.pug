@@ -14,7 +14,7 @@ header.header
                         li 
                             a(href="/") Trang chủ
                         li(class="sub-menu")
-                            -const  pathProduct = "/products"
+                            -   const pathProduct = "/products"
                             a(href=pathProduct) Sản phẩm
                             +sub-menu(layoutProductsCategory, pathProduct)
                             
