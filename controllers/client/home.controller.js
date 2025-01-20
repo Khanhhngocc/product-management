@@ -13,9 +13,15 @@ module.exports.index = async(req, res) => {
     })
     const newProductsFeatured = productsHelper.priceNewProducts(productsFeatured);
 
-    
+    //Lấy ra danh sách sản phẩm mới nhất
+    const productsNew = await Product.find({
+        deleted: false,
+        status: "active"
+    }).sort({ position: "desc" }).limit(6);
+
     res.render("client/pages/home/index", {
         pageTitle: "Trang chủ",
         productsFeatured: newProductsFeatured,
+        productsNew: productsNew
     })
 }
