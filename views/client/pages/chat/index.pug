@@ -12,24 +12,12 @@ block main
                 .chat 
                  
                     .inner-body 
-                        .inner-incoming
-                            .inner-name Kim Taehyung
-                            .inner-content 
-                                | Hey, you!
-                        .inner-outgoing 
-                            .inner-content 
-                                | What's up
-                        .inner-incoming 
-                            .inner-name Kim Taehyung
-                            .inner-content 
-                                | Need money
-                        .inner-outgoing 
-                            .inner-content 
-                                | ? 
-                        .inner-incoming 
-                            .inner-name Kim Taehyung
-                            .inner-content 
-                                | Please
+                        each chat in chats
+                            div(class=(chat.infoUser.id == user.id ? "inner-outgoing" : "inner-incoming"))
+                                if(chat.infoUser.id != user.id)
+                                    .inner-name #{chat.infoUser.fullName}
+                                .inner-content 
+                                    | #{chat.content}
                     .inner-foot
                         form(
                             class="inner-form"
