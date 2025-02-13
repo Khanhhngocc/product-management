@@ -1,0 +1,45 @@
+extends ../../layouts/default.pug 
+include ../../mixins/box-head.pug
+
+block main 
+    .container.my-3
+        .row 
+            .col-12
+                +box-head("Chat")
+
+        .row
+            .col-12 
+                .chat 
+                 
+                    .inner-body 
+                        .inner-incoming
+                            .inner-name Kim Taehyung
+                            .inner-content 
+                                | Hey, you!
+                        .inner-outgoing 
+                            .inner-content 
+                                | What's up
+                        .inner-incoming 
+                            .inner-name Kim Taehyung
+                            .inner-content 
+                                | Need money
+                        .inner-outgoing 
+                            .inner-content 
+                                | ? 
+                        .inner-incoming 
+                            .inner-name Kim Taehyung
+                            .inner-content 
+                                | Please
+                    .inner-foot
+                        form(
+                            class="inner-form"
+                            action=""
+                        )
+                            input(
+                                type="text"
+                                placeholder="Type message..."
+                                name="content"
+                            )
+                            button
+                                i.fa-solid.fa-paper-plane
+                
