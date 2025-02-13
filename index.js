@@ -48,6 +48,13 @@ app.use(express.static(`${__dirname}/public`));
 route(app);
 routeAdmin(app);
 
+//* là các trường hợp còn lại
+app.get("*", (req, res) => {
+    res.render("client/pages/errors/404", {
+        pageTitle: "404 NOT FOUND"
+    })
+});
+
 app.listen(port, () => {
     console.log(`App listening on port ${port}`);
 });
