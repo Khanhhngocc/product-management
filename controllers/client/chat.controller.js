@@ -23,6 +23,14 @@ module.exports.chat = async(req, res) => {
                 content: content
             });
         });
+
+        socket.on("CLIENT_SEND_TYPING", (type) => {
+            socket.broadcast.emit("SERVER_RETURN_TYPING", {
+                userId: userId,
+                fullName: fullName,
+                type: type
+            });
+        });
     });
     // End SocketIO
 
@@ -39,7 +47,6 @@ module.exports.chat = async(req, res) => {
         chat.infoUser = infoUser;
 
     }
-
 
     res.render("client/pages/chat/index", {
         pageTitle: "Chat",
