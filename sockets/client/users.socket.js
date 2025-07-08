@@ -2,6 +2,8 @@ const User = require("../../models/user.model");
 
 module.exports = async (res) => {
     _io.once("connection", (socket) => {
+
+        // Chức năng gửi yêu cầu
         socket.on("CLIENT_ADD_FRIEND", async(userId) => {
             const myUserId = res.locals.user.id;
 
@@ -28,6 +30,38 @@ module.exports = async (res) => {
                     _id: myUserId
                 }, {
                     $push: { requestFriends: userId }
+                })
+            }
+        })
+
+        // Chức năng huỷ yêu cầu
+        socket.on("CLIENT_CANCEL_FRIEND", async(userId) => {
+
+            const myUserId = res.locals.user.id;
+
+            const existAInB = await User.findOne({
+                _id: userId,
+                acceptFriends: myUserId
+            })
+
+            if(existAInB){
+                await User.updateOne({
+                    _id: userId
+                }, {
+                    $pull: { requestFriends: myUserId }
+                })
+            }
+
+            const existBInA = await User.findOne({
+                _id: myUserId,
+                requestFriends: userId
+            })
+
+            if(existBInA){
+                await User.updateOne({
+                    _id: myUserId
+                }, {
+                    $pull: { requestFriends: userId }
                 })
             }
         })
