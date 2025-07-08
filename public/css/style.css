@@ -414,7 +414,7 @@
     display: none;
 }
 
-.box-user [btn-add-friend] {
+.box-user.add [btn-add-friend] {
     display: none;
 }
 
