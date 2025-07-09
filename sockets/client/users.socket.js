@@ -65,5 +65,36 @@ module.exports = async (res) => {
                 })
             }
         })
+
+        // Chức năng từ chối kết bạn
+        socket.on("CLIENT_REFUSE_FRIEND", async(userId) => {
+            const myUserId = res.locals.user.id;
+
+            const existAInB = await User.findOne({
+                _id: myUserId,
+                acceptFriends: userId
+            })
+
+            if(existAInB){
+                await User.updateOne({
+                    _id: myUserId,
+                }, {
+                    $pull: { acceptFriends: userId }
+                })
+            }
+
+            const existBInA = await User.findOne({
+                _id: userId,
+                requestFriends: myUserId
+            })
+
+            if(existBInA){
+                await User.updateOne({
+                    _id: userId
+                }, {
+                    $pull: { requestFriends: myUserId }
+                })
+            }
+        })
     })
 }
