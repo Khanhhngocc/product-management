@@ -9,7 +9,7 @@ module.exports = async (res) => {
 
             const existUserAInB = await User.findOne({
                 _id: userId,
-                requestFriends: myUserId
+                acceptFriends: myUserId
             })
 
             if(!existUserAInB){
@@ -32,6 +32,25 @@ module.exports = async (res) => {
                     $push: { requestFriends: userId }
                 })
             }
+
+            //Lấy ra độ dài acceptFriends mới
+            const infoUser = await User.findOne({
+                _id: userId
+            });
+            const lengthAcceptFriends = infoUser.acceptFriends.length;
+            socket.broadcast.emit("SERVER_RETURN_LENGTH_ACCEPT_FRIEND", {
+                userId: userId,
+                lengthAcceptFriends: lengthAcceptFriends
+            })
+
+            const infoUserA = await User.findOne({
+                _id: myUserId
+            }).select("id avatar fullName");
+
+            socket.broadcast.emit("SERVER_RETURN_LENGTH_INFO_FRIEND", {
+                userId: userId,
+                infoUserA: infoUserA
+            })
         })
 
         // Chức năng huỷ yêu cầu
@@ -64,6 +83,22 @@ module.exports = async (res) => {
                     $pull: { requestFriends: userId }
                 })
             }
+
+            const infoUserB = await User.findOne({
+                _id: userId
+            });
+            const lengthAcceptFriends = infoUserB.acceptFriends.length;
+
+            socket.broadcast.emit("SERVER_RETURN_LENGTH_ACCEPT_FRIEND", {
+                userId: userId,
+                lengthAcceptFriends: lengthAcceptFriends
+            })
+
+            socket.broadcast.emit("SERVER_RETURN_USER_ID_CANCEL_FRIEND", {
+                userId: userId,
+                userIdA: myUserId
+            })
+
         })
 
         // Chức năng từ chối kết bạn
